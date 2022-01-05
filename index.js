@@ -1,36 +1,113 @@
-const http = require('http'), //This module provides the HTTP server functionalities
-    path = require('path'), //The path module provides utilities for working with file and directory paths
-    express = require('express'), //This module allows this app to respond to HTTP requests, defines the routing and renders back the required content
-    fs = require('fs'), //This module allows to work with the file system: read and write files back
-    xmlParse = require('xslt-processor').xmlParse, //This module allows to work with XML files
-    xsltProcess = require('xslt-processor').xsltProcess, //The same module allows us to uitlise XSL Transformations
-    xml2js = require('xml2js'); //This module does XML <-> JSON conversion
+const express = require('express'), //Allows to respond to HTTP requests, defines routing and renders the required content
+    fs = require('fs'), //Working with the file system (read and write files)
+    http = require('http'), //HTTP Server
+    path = require('path'), //Utility that allows us to work with directory paths
+    xml2js = require('xml2js'), //This is XML <-> JSON converter
+    xmlParse = require('xslt-processor').xmlParse, //Parsing XML
+    xsltProcess = require('xslt-processor').xsltProcess; //Processing XSLT
 
-const router = express(),
-    server = http.createServer(router);
+const router = express(), //Instantiating Express
+    server = http.createServer(router); //Instantiating the server
 
-router.use(express.static(path.resolve(__dirname, 'views'))); //We serve static content from "views" folder
+router.use(express.static(path.resolve(__dirname, 'views'))); //Serving static content from "views" folder
+router.use(express.json());
 
-router.get('/', function (req, res) {
+function XMLtoJSON(filename, cb) {
+    let filepath = path.normalize(path.join(__dirname, filename));
+    fs.readFile(filepath, 'utf8', function(err, xmlStr) {
+        if (err) throw (err);
+        xml2js.parseString(xmlStr, {}, cb);
+    });
+};
 
-    res.writeHead(200, { 'Content-Type': 'text/html' });
+function JSONtoXML(filename, obj, cb) {
+    let filepath = path.normalize(path.join(__dirname, filename));
+    let builder = new xml2js.Builder();
+    let xml = builder.buildObject(obj);
+    fs.unlinkSync(filepath);
+    fs.writeFile(filepath, xml, cb);
+};
 
-    let xml = fs.readFileSync('WillianCafe.xml', 'utf8'),
-        xsl = fs.readFileSync('WillianCafe.xsl', 'utf8');;
+router.get('/get/html', function(req, res) {
 
-    console.log(xml);
-    console.log(xsl);
+    res.writeHead(200, { 'Content-Type': 'text/html' }); //Tell the user that the resource exists and which type that is
 
-    let doc = xmlParse(xml),
-        stylesheet = xmlParse(xsl);
+    let xml = fs.readFileSync('WillianCafe.xml', 'utf8'), //read in the XML file
+        xsl = fs.readFileSync('WillianCafe.xsl', 'utf8'); //read in the XSL file
 
-    console.log(doc);
-    console.log(stylesheet);
+    // console.log(xml);
+    // console.log(xsl);
 
-    let result = xsltProcess(doc, stylesheet);
+    let doc = xmlParse(xml), //Parse the XML file
+        stylesheet = xmlParse(xsl); //Parse the XSL file
 
-    console.log(result);
+    let result = xsltProcess(doc, stylesheet); //Performing XSLT
 
-    res.end(result.toString());
+    // console.log(result);
 
+    res.end(result.toString()); //Serve back the user
+
+});
+
+router.post('/post/json', function(req, res) {
+
+    console.log(req.body);
+
+    function appendJSON(obj) {
+
+        console.log(JSON.stringify(obj, null, " "))
+
+        XMLtoJSON('WillianCafe.xml', function(err, result) {
+            if (err) throw (err);
+
+            result.menu.section[obj.sec_n].entry.push({ 'item': obj.item, 'price': obj.price });
+
+            console.log(JSON.stringify(result, null, " "));
+
+            JSONtoXML('WillianCafe.xml', result, function(err) {
+                if (err) console.log(err);
+            });
+
+        });
+
+    };
+
+    appendJSON(req.body);
+
+    res.redirect('back');
+
+});
+
+router.post('/post/delete', function(req, res) {
+
+    console.log(req.body);
+
+    function deleteJSON(obj) {
+
+        console.log(obj)
+
+        XMLtoJSON('WillianCafe.xml', function(err, result) {
+            if (err) throw (err);
+
+            console.log(obj.sec);
+            console.log(obj.ent);
+            console.log(result);
+
+            delete result.menu.section[obj.sec].entry[obj.ent];
+
+            JSONtoXML('WillianCafe.xml', result, function(err) {
+                if (err) console.log(err);
+            });
+        });
+    };
+
+    deleteJSON(req.body);
+
+    res.redirect('back');
+
+});
+
+server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function() {
+    const addr = server.address();
+    console.log('Server listening at', addr.address + ':' + addr.port)
 });
