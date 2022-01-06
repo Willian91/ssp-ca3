@@ -12,7 +12,7 @@ function draw_table(){
         });
 
     };
-    $.getHTMLuncached("/get/html");
+    $.getHTMLuncached("/html");
 };
 
 
