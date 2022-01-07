@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').load()
+  require('dotenv').config()
 }
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
@@ -172,4 +172,3 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function ()
     const addr = server.address();
     console.log('Server listening at', addr.address + ':' + addr.port)
 }); 
-//app.listen(80)
