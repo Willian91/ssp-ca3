@@ -11,35 +11,35 @@
         </entry>
         <entry vegetarian="true">
             <item>Coconut Water</item>
-            <price>2.0</price>
+            <price>4.50</price>
         </entry>        
     </section>
     <section name="Side Dishes">
         <entry>
             <item>Garlic Fries</item>
-            <price>4.95</price>
+            <price>4.50</price>
         </entry>
         <entry>
             <item>Chips</item>
-            <price>4.50</price>
+            <price>4.00</price>
         </entry>
         <entry vegetarian="true">
             <item>Potato Salad</item>
-            <price>4.0</price>
+            <price>6.50</price>
         </entry>        
     </section>
     <section name="Breakfast">
         <entry>
             <item>Eggs Benedict</item>
-            <price>12.99</price>
+            <price>10.99</price>
         </entry>
         <entry>
             <item>Poached Eggs</item>
-            <price>8</price>
+            <price>8.00</price>
         </entry>
-        <entry vegetarian="true">
-            <item>FrenchToast</item>
-            <price>2.0</price>
+        <entry>
+            <item>Irish Breakfast</item>
+            <price>10.50</price>
         </entry>        
     </section>
     <section name="Lunch">
@@ -49,11 +49,11 @@
         </entry>
         <entry>
             <item>Soup of the Day</item>
-            <price>6</price>
+            <price>6.00</price>
         </entry>
         <entry vegetarian="true">
             <item>Falafel</item>
-            <price>10</price>
+            <price>10.50</price>
         </entry>        
     </section>
     <section name="Dinner">
@@ -63,11 +63,11 @@
         </entry>
         <entry>
             <item>Sushi</item>
-            <price>15</price>
+            <price>15.00</price>
         </entry>
         <entry vegetarian="true">
-            <item>Broccoli, Cheddar & Quinoa Gratin.</item>
-            <price>15</price>
+            <item>Broccoli & Quinoa </item>
+            <price>15.50</price>
         </entry>        
     </section>
 </menu>

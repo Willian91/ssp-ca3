@@ -1,7 +1,10 @@
-//Allows to respond to HTTP requests, defines routing and renders the required content
-const express = require('express'),
-//Working with the file system (read and write files)
-const fs = require('fs'),
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').load()
+}
+
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
+
 //HTTP Server
 const http = require('http'),
 //Utility that allows us to work with directory paths
@@ -12,14 +15,60 @@ const xml2js = require('xml2js'),
 const xmlParse = require('xslt-processor').xmlParse,
 //Processing XSLT
 const xsltProcess = require('xslt-processor').xsltProcess;
-//Instantiating Express
-const router = express(),
 //Instantiating the server
 const server = http.createServer(router);
-//Serving static content from "views" folder
-router.use(express.static(path.resolve(__dirname, 'views')));
-router.use(express.urlencoded({ extended: true }));
-router.use(express.json());
+
+const express = require('express')
+const app = express()
+const fs = require('fs')
+const stripe = require('stripe')(stripeSecretKey)
+
+app.set('view', 'ejs')
+app.use(express.json())
+app.use(express.static('public'))
+
+app.get('/menu', function(req, res) {
+  fs.readFile('items.json', function(error, data) {
+    if (error) {
+      res.status(500).end()
+    } else {
+      res.render('menu.ejs', {
+        stripePublicKey: stripePublicKey,
+        items: JSON.parse(data)
+      })
+    }
+  })
+})
+
+app.post('/purchase', function(req, res) {
+  fs.readFile('items.json', function(error, data) {
+    if (error) {
+      res.status(500).end()
+    } else {
+      const itemsJson = JSON.parse(data)
+      const itemsArray = itemsJson.drinkItems.concat(itemsJson.menu)
+      let total = 0
+      req.body.items.forEach(function(item) {
+        const itemJson = itemsArray.find(function(i) {
+          return i.id == item.id
+        })
+        total = total + itemJson.price * item.quantity
+      })
+
+      stripe.charges.create({
+        amount: total,
+        source: req.body.stripeTokenId,
+        currency: 'usd'
+      }).then(function() {
+        console.log('Charge Successful')
+        res.json({ message: 'Successfully purchased items' })
+      }).catch(function() {
+        console.log('Charge Fail')
+        res.status(500).end()
+      })
+    }
+  })
+})
 
 function XMLtoJSON(filename, cb) {
     const filepath = path.normalize(path.join(__dirname, filename));
@@ -36,7 +85,6 @@ function JSONtoXML(filename, obj, cb) {
     fs.unlinkSync(filepath);
     fs.writeFile(filepath, xml, cb);
 };
-
 router.get('/html', function (req, res) {
 
     //Tell the user that the resource exists and which type that is
@@ -115,8 +163,8 @@ router.post('/post/delete', function (req, res) {
     res.redirect('back');
 
 });
-
-server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function () {
+/*server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function () {
     const addr = server.address();
     console.log('Server listening at', addr.address + ':' + addr.port)
-});
+}); */
+app.listen(3000)

@@ -1,0 +1,102 @@
+{
+  "Drinks": [
+    {
+      "id": 1,
+      "name": "Coke",
+      "price": 250,
+      "imgName": "Coca-Cola-Can-icon.png"
+    },
+    {
+      "id": 2,
+      "name": "Fanta",
+      "price": 220,
+      "imgName": "fanta2.png"
+    },
+    {
+      "id": 3,
+      "name": "Coconut Water",
+      "price": 450,
+      "imgName": "coconut.png"
+    }
+  ],
+  "Side Dishes": [
+    {
+      "id": 4,
+      "name": "Garlic Fries",
+      "price": 4.50,
+      "imgName": "friesgarlic.png"
+    },
+    {
+      "id": 5,
+      "name": "Chips",
+      "price": 400,
+      "imgName": "fries.png"
+    },
+    {
+      "id": 6,
+      "name": "Potato Salad",
+      "price": 650,
+      "imgName": "potatosalad.png"
+    }
+  ],
+  "Breakfast": [
+    {
+      "id": 7,
+      "name": "Eggs Benedict",
+      "price": 1099,
+      "imgName": "EggsBenedict.png"
+    },
+    {
+      "id": 8,
+      "name": "Poached Eggs",
+      "price": 800,
+      "imgName": "Poachedeggs.png"
+    },
+    {
+      "id": 9,
+      "name": "Irish Breakfast",
+      "price": 1050,
+      "imgName": "fullbreak.png"
+    }
+  ],
+  "Lunch": [
+    {
+      "id": 10,
+      "name": "Grilled Chicken Sadnwich",
+      "price": 750,
+      "imgName": "chickensandwwich.png"
+    },
+    {
+      "id": 11,
+      "name": "Soup of the Day",
+      "price": 600,
+      "imgName": "soupofday.png"
+    },
+    {
+      "id": 12,
+      "name": "Falafel",
+      "price": 1050,
+      "imgName": "falafel.png"
+    }
+  ],
+  "Dinner": [
+    {
+      "id": 13,
+      "name": "Ribeye Steak",
+      "price": 1099,
+      "imgName": "ribeysteak.png"
+    },
+    {
+      "id": 14,
+      "name": "Sushi",
+      "price": 1500,
+      "imgName": "sushi.png"
+    },
+    {
+      "id": 15,
+      "name": "Broccoli & Quinoa",
+      "price": 1550,
+      "imgName": "Broccoli, Cheddar & Quinoa Gratin.png"
+    }
+  ]
+}
