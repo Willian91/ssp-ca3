@@ -3,30 +3,32 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/Willian91/ssp-ca3.git"
+    "type": "git",
+    "url": "git+https://github.com/Willian91/ssp-ca3.git"
   },
   "author": "Willian Amaral 2020487",
   "license": "ISC",
   "bugs": {
-      "url": "https://github.com/Willian91/ssp-ca3/issues"
+    "url": "https://github.com/Willian91/ssp-ca3/issues"
   },
   "homepage": "https://github.com/Willian91/ssp-ca3#readme",
   "keywords": [
-      "CA",
-      "project",
-      "menu"
+    "CA",
+    "project",
+    "menu"
   ],
   "dependencies": {
-      "express": "^4.17.2",
-      "fs": "^0.0.1-security",
-      "http": "^0.0.1-security",
-      "path": "^0.12.7",
-      "xml2js": "^0.4.23",
-      "xslt-processor": "^0.11.5"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "fs": "^0.0.1-security",
+    "helper": "^0.0.13",
+    "http": "^0.0.1-security",
+    "path": "^0.12.7",
+    "xml2js": "^0.4.23",
+    "xslt-processor": "^0.11.5"
   },
   "description": ""
 }

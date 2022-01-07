@@ -1,18 +1,18 @@
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').load()
+  require('dotenv')//.load()
 }
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 
 //HTTP Server
-const http = require('http'),
+const http = require('http');
 //Utility that allows us to work with directory paths
-const path = require('path'),
+const path = require('path');
 //This is XML <-> JSON converter
-const xml2js = require('xml2js'),
+const xml2js = require('xml2js');
 //Parsing XML
-const xmlParse = require('xslt-processor').xmlParse,
+const xmlParse = require('xslt-processor').xmlParse;
 //Processing XSLT
 const xsltProcess = require('xslt-processor').xsltProcess;
 //Instantiating the server
