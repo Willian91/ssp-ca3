@@ -1,13 +1,16 @@
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv')//.load()
+  require('dotenv').load()
 }
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
 
 //HTTP Server
+//
+
 const http = require('http');
 //Utility that allows us to work with directory paths
+
 const path = require('path');
 //This is XML <-> JSON converter
 const xml2js = require('xml2js');
@@ -16,6 +19,8 @@ const xmlParse = require('xslt-processor').xmlParse;
 //Processing XSLT
 const xsltProcess = require('xslt-processor').xsltProcess;
 //Instantiating the server
+const expressjs = require('express');
+const router = expressjs.Router();
 const server = http.createServer(router);
 
 const express = require('express')
@@ -167,4 +172,4 @@ server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function ()
     const addr = server.address();
     console.log('Server listening at', addr.address + ':' + addr.port)
 }); 
-app.listen(3000)
+//app.listen(80)
