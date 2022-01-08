@@ -1,6 +1,12 @@
+
 /*if (process.env.NODE_ENV !== 'production') {
   require('dotenv').load()
 }*/
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 const stripePublicKey = process.env.STRIPE_PUBLIC_KEY
@@ -172,3 +178,5 @@ router.post('/post/delete', function (req, res) {
     console.log('Server listening at', addr.address + ':' + addr.port)
 }); */
 app.listen(3000)
+
+
